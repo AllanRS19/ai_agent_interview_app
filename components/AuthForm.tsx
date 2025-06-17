@@ -79,9 +79,15 @@ const AuthForm = ({ type }: { type: FormType }) => {
                 toast.success('Signed in successfully');
                 router.push('/');
             }
-        } catch (error) {
-            console.log(error);
-            toast.error(`There was an error: ${error}`);
+        } catch (error: any) {
+            switch (error.code) {
+                case "auth/invalid-credential":
+                    toast.error('The email or password does not match. Please try again');
+                    break;
+                default:
+                    toast.error('There was an error signing you in. Please try again');
+                    break;
+            }
         }
     }
 
