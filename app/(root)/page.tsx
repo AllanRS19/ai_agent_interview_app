@@ -1,7 +1,7 @@
 import InterviewCard from "@/components/InterviewCard";
 import { Button } from "@/components/ui/button";
-import { dummyInterviews } from "@/constants";
-import { getCurrentUser, getInterviewsByUserId, getLatestInterviews } from "@/lib/actions/auth.actions";
+import { getCurrentUser } from "@/lib/actions/auth.actions";
+import { getInterviewsByUserId, getLatestInterviews } from "@/lib/actions/general.actions";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,8 +14,8 @@ const Page = async () => {
         await getLatestInterviews({ userId: user?.id! })
     ]);
 
-    const hasPastInterviews = userInterviews?.length > 0;
-    const hasUpcomingInterviews = latestInterviews?.length > 0;
+    const hasPastInterviews = userInterviews ? userInterviews?.length > 0 : false;
+    const hasUpcomingInterviews = latestInterviews ? latestInterviews?.length > 0 : false;
 
     return (
         <>
