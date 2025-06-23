@@ -4,10 +4,13 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import DisplayTechIcons from "./DisplayTechIcons";
+import { getFeedbackByInterviewId } from "@/lib/actions/general.actions";
 
-const InterviewCard = ({ id: interviewId, userId, role, type, techstack, createdAt }: InterviewCardProps) => {
+const InterviewCard = async ({ id: interviewId, userId, role, type, techstack, createdAt }: InterviewCardProps) => {
 
-    const feedback = null as Feedback | null;
+    const feedback = userId && interviewId
+        ? await getFeedbackByInterviewId({ interviewId: interviewId, userId })
+        : null;
     const normalizedType = /mix/gi.test(type) ? "Mixed" : type;
     const formattedDate = dayjs(feedback?.createdAt || createdAt || Date.now()).format('MMM D, YYYY');
 
@@ -19,7 +22,7 @@ const InterviewCard = ({ id: interviewId, userId, role, type, techstack, created
                         <p className="badge-text">{normalizedType}</p>
                     </div>
 
-                    <Image 
+                    <Image
                         src={getRandomInterviewCover()}
                         alt="Interview Cover"
                         width={90}
@@ -33,7 +36,7 @@ const InterviewCard = ({ id: interviewId, userId, role, type, techstack, created
 
                     <div className="flex flex-row gap-5 mt-3">
                         <div className="flex flex-row gap-2">
-                            <Image 
+                            <Image
                                 src="/calendar.svg"
                                 alt="Calendar"
                                 width={22}
@@ -43,7 +46,7 @@ const InterviewCard = ({ id: interviewId, userId, role, type, techstack, created
                         </div>
 
                         <div className="flex flex-row gap-2 items-center">
-                            <Image 
+                            <Image
                                 src="/star.svg"
                                 alt="Star"
                                 width={22}
@@ -59,7 +62,7 @@ const InterviewCard = ({ id: interviewId, userId, role, type, techstack, created
                 </div>
 
                 <div className="flex flex-row justify-between">
-                    <DisplayTechIcons 
+                    <DisplayTechIcons
                         techStack={techstack}
                     />
 

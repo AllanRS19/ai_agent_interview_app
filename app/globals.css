@@ -255,6 +255,10 @@
     .buttons {
       @apply flex w-full justify-evenly gap-4 max-sm:flex-col max-sm:items-center;
     }
+
+    p {
+      @apply text-white font-light
+    }
   }
 
   .auth-layout {
