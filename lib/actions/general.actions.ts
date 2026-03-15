@@ -48,6 +48,8 @@ export async function getInterviewById(interviewId: string): Promise<Interview |
 export async function createInterviewFeedback(params: CreateFeedbackParams) {
     const { interviewId, userId, transcript } = params;
 
+    console.log('Entered the interview feedback creation function');
+
     try {
         const formattedTranscript = transcript.map((sentence) => (
             `- ${sentence.role}: ${sentence.content}\n`
@@ -73,7 +75,11 @@ export async function createInterviewFeedback(params: CreateFeedbackParams) {
                 "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories"
         });
 
+        console.log(output);
+
         const { totalScore, categoryScores, areasForImprovement, finalAssessment, strengths } = await output;
+
+        console.log(totalScore, categoryScores, areasForImprovement, finalAssessment, strengths);
 
         const feedback = await db
             .collection('feedback')
