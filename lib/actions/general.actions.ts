@@ -78,7 +78,7 @@ export async function createInterviewFeedback(params: CreateFeedbackParams) {
                 "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories"
         });
 
-        console.log(output);
+        console.log(await output);
 
         const { totalScore, categoryScores, areasForImprovement, finalAssessment, strengths } = await output;
 
