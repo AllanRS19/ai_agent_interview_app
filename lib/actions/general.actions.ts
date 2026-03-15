@@ -103,7 +103,7 @@ export async function createInterviewFeedback(params: CreateFeedbackParams) {
         }
     } catch (error) {
         console.error('Error saving feedback', error);
-        return { sucess: false };
+        return { success: false };
     }
 }
 
