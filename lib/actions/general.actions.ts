@@ -47,6 +47,7 @@ export async function getInterviewById(interviewId: string): Promise<Interview |
 
 export async function createInterviewFeedback(params: CreateFeedbackParams) {
     const { interviewId, userId, transcript } = params;
+    console.log("This is the information: ", interviewId, userId, transcript);
 
     console.log('Entered the interview feedback creation function');
 
@@ -54,6 +55,8 @@ export async function createInterviewFeedback(params: CreateFeedbackParams) {
         const formattedTranscript = transcript.map((sentence) => (
             `- ${sentence.role}: ${sentence.content}\n`
         )).join('');
+
+        console.log(formattedTranscript);
 
         const { output } = streamText({
             model: google('gemini-2.5-flash'),
