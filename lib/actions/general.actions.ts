@@ -3,7 +3,7 @@
 import { feedbackSchema } from "@/constants";
 import { db } from "@/firebase/admin";
 import { google } from "@ai-sdk/google";
-import { generateObject } from "ai";
+import { Output, streamText } from "ai";
 
 export async function getInterviewsByUserId(userId: string): Promise<Interview[] | null> {
     const interviews = await db
@@ -53,9 +53,11 @@ export async function createInterviewFeedback(params: CreateFeedbackParams) {
             `- ${sentence.role}: ${sentence.content}\n`
         )).join('');
 
-        const { object: { totalScore, categoryScores, strengths, areasForImprovement, finalAssessment }  } = await generateObject({
+        const { output } = streamText({
             model: google('gemini-2.5-flash'),
-            schema: feedbackSchema,
+            output: Output.object({
+                schema: feedbackSchema
+            }),
             prompt: `You are an AI interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories. Be thorough and detailed in your analysis. Don't be lenient with the candidate. If there are mistakes or areas for improvement, point them out.
         Transcript:
         ${formattedTranscript}
@@ -71,6 +73,8 @@ export async function createInterviewFeedback(params: CreateFeedbackParams) {
                 "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories"
         });
 
+        const { totalScore, categoryScores, areasForImprovement, finalAssessment, strengths } = await output;
+
         const feedback = await db
             .collection('feedback')
             .add({
@@ -84,10 +88,10 @@ export async function createInterviewFeedback(params: CreateFeedbackParams) {
                 createdAt: new Date().toISOString()
             });
 
-            return {
-                success: true,
-                feedbackId: feedback.id
-            }
+        return {
+            success: true,
+            feedbackId: feedback.id
+        }
     } catch (error) {
         console.error('Error saving feedback', error);
         return { sucess: false };
