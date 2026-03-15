@@ -3,7 +3,7 @@
 import { feedbackSchema } from "@/constants";
 import { db } from "@/firebase/admin";
 import { google } from "@ai-sdk/google";
-import { Output, streamText } from "ai";
+import { generateText, Output } from "ai";
 
 export async function getInterviewsByUserId(userId: string): Promise<Interview[] | null> {
     const interviews = await db
@@ -58,7 +58,7 @@ export async function createInterviewFeedback(params: CreateFeedbackParams) {
 
         console.log(formattedTranscript);
 
-        const { output } = streamText({
+        const { output } = await generateText({
             model: google('gemini-2.5-flash'),
             output: Output.object({
                 schema: feedbackSchema
@@ -78,11 +78,11 @@ export async function createInterviewFeedback(params: CreateFeedbackParams) {
                 "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories"
         });
 
-        console.log(await output);
+        console.log("This is the output: ", output);
 
-        const { totalScore, categoryScores, areasForImprovement, finalAssessment, strengths } = await output;
+        const { totalScore, categoryScores, areasForImprovement, finalAssessment, strengths } = output;
 
-        console.log(totalScore, categoryScores, areasForImprovement, finalAssessment, strengths);
+        console.log("These are the details after generating the feedback: ", totalScore, categoryScores, areasForImprovement, finalAssessment, strengths);
 
         const feedback = await db
             .collection('feedback')
