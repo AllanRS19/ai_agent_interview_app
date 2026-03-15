@@ -194,26 +194,31 @@ export const feedbackSchema = z.object({
 
     categoryScores: z.object({
         communicationSkills: z.object({
+            name: z.string('Communication Skills'),
             score: z.number(),
             comment: z.string(),
         }),
 
         technicalKnowledge: z.object({
+            name: z.string('Technical Knowledge'),
             score: z.number(),
             comment: z.string(),
         }),
 
         problemSolving: z.object({
+            name: z.string('problem Solving'),
             score: z.number(),
             comment: z.string(),
         }),
 
         culturalFit: z.object({
+            name: z.string('Cultural Fit'),
             score: z.number(),
             comment: z.string(),
         }),
 
         confidenceAndClarity: z.object({
+            name: z.string('Confidence and Clarity'),
             score: z.number(),
             comment: z.string(),
         }),

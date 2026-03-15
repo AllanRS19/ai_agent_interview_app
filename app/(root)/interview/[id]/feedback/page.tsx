@@ -6,10 +6,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+type CategoryScoreItem = {
+    name: string;
+    score: number;
+    comment: string;
+};
+
+type CategoryScore = {
+    score: number;
+    comment: string;
+};
+
 const Page = async ({ params }: RouteParams) => {
 
     const { id } = await params;
     const user = await getCurrentUser();
+
+    if (!user) redirect('/sign-in');
 
     const interview = await getInterviewById(id);
     if (!interview) redirect('/');
@@ -17,6 +30,13 @@ const Page = async ({ params }: RouteParams) => {
     const feedback = await getFeedbackByInterviewId({ interviewId: id, userId: user?.id });
 
     console.log(feedback);
+
+    const categoryScores: CategoryScoreItem[] = Object.entries(feedback?.categoryScores ?? {}).map(
+        ([name, value]: [string, CategoryScore]) => ({
+            name,
+            ...value
+        })
+    );
 
     return (
         <section className="section-feedback">
@@ -67,7 +87,8 @@ const Page = async ({ params }: RouteParams) => {
 
             <div className="flex flex-col gap-4">
                 <h2>Breakdown of the Interview:</h2>
-                {feedback?.categoryScores?.map((category, index) => (
+                {/* {console.log(feedback?.categoryScores)} */}
+                {categoryScores?.map((category, index) => (
                     <div key={index}>
                         <p className="font-bold">
                             {index + 1}. {category.name} ({category.score} / 100)
@@ -77,21 +98,45 @@ const Page = async ({ params }: RouteParams) => {
                 ))}
             </div>
 
+            {/* UPDATED WAY FOR SHOWING THE STRENGTHS INFORMATION TO THE UI */}
+
             <div className="flex flex-col gap-3">
+                <h3>Strengths</h3>
+                {feedback?.strengths
+                    ? <p>{feedback.strengths}</p>
+                    : <p>No strengths were identified for this interview</p>
+                }
+            </div>
+
+            {/* ORIGINAL WAY FOR SHOWING THE STRENGTHS INFORMATION TO THE UI */}
+
+            {/* <div className="flex flex-col gap-3">
                 <h3>Strengths</h3>
                 <ul>
                     {feedback?.strengths.length
                         ? feedback.strengths.map((strength, index) => (
-                                <li key={index}>
-                                    {strength}
-                                </li>
-                            ))
+                            <li key={index}>
+                                {strength}
+                            </li>
+                        ))
                         : <p>No strengths were identified for this interview</p>
                     }
                 </ul>
-            </div>
+            </div> */}
+
+            {/* UPDATED WAY FOR SHOWING THE AREAS OF IMPROVEMENT INFORMATION TO THE UI */}
 
             <div className="flex flex-col gap-3">
+                <h3>Areas for Improvement</h3>
+                {feedback?.areasForImprovement
+                    ? <p>{feedback.areasForImprovement}</p>
+                    : <p>No areas for improvement were identified for this interview</p>
+                }
+            </div>
+
+            {/* ORIGINAL WAY FOR SHOWING THE AREAS OF IMPROVEMENT INFORMATION TO THE UI */}
+
+            {/* <div className="flex flex-col gap-3">
                 <h3>Areas for Improvement</h3>
                 <ul>
                     {feedback?.areasForImprovement?.map((area, index) => (
@@ -100,7 +145,7 @@ const Page = async ({ params }: RouteParams) => {
                         </li>
                     ))}
                 </ul>
-            </div>
+            </div> */}
 
             <div className="buttons">
                 <Button className="btn-secondary flex-1">
