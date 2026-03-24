@@ -1,36 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Prepwise - AI Mock Interview Platform
+
+An AI-powered job interview preparation platform that simulates real interviews using voice agents and provides structured feedback to help users improve for any interviews the have scheduled.
+
+---
+
+## Preview
+
+![Project Banner](https://github.com/user-attachments/assets/1c0131c7-9f2d-4e3b-b47c-9679e76d8f9a)
+
+---
+
+## About the Project
+
+Prepwise is a full-stack web application that allows users to:
+- Generate mock interviews based on the input they provide to the AI Agent for the following data: Role, Level of experience, tech stack, type of interview and amount of questions
+- Interact with an AI voice interviewer
+- Receive detailed feedback and performance analysis based on the interview that was completed
+
+---
+
+## Tech Stack
+
+- **Frontend:** Next.js, Tailwind CSS, shadcn/ui
+- **Backend:** Next.js API Routes
+- **Authentication & DB:** Firebase
+- **AI & Voice:**
+  - Vapi AI (voice agents)
+  - Google Gemini (question generation & evaluation)
+- **Validation:** Zod
+
+---
+
+## Features
+
+- **Authentication**
+  - Sign up / login with Firebase
+
+- **AI Voice Interviews**
+  - Real-time interaction using Vapi voice agents
+
+- **Dynamic Question Generation**
+  - AI-generated questions based on:
+    - Role
+    - Experience level
+    - Tech stack
+    - Interview type
+
+- **AI Feedback System**
+  - Rates the candidate interview answers based on:
+    - Communication
+    - Technical knowledge
+    - Problem-solving
+    - Confidence
+
+- **Interview Dashboard**
+  - Track and manage all interviews and the status
+
+- **Responsive Design**
+  - Works across mobile, tablet, and desktop
+
+---
+
+## Architecture Highlights
+
+- Modular component structure for scalability
+- Reusable UI components (shadcn)
+- Server-side + client-side hybrid rendering (Next.js)
+- Clean separation of concerns:
+  - API logic
+  - UI components
+  - Utility functions
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js
+- npm or yarn
+- Git
+
+---
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/ai_agent_interview_app.git
+cd ai_agent_interview_app
+
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+---
+
+### 3. Set up environment variables
+
+Create a `.env.local` file in the root directory and add:
+
+```env
+NEXT_PUBLIC_VAPI_WEB_TOKEN=
+NEXT_PUBLIC_VAPI_WORKFLOW_ID=
+
+GOOGLE_GENERATIVE_AI_API_KEY=
+
+NEXT_PUBLIC_BASE_URL=
+
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
+
+FIREBASE_PROJECT_ID=
+FIREBASE_CLIENT_EMAIL=
+FIREBASE_PRIVATE_KEY=
+```
+
+Replace these values with your actual credentials from:
+
+* Firebase (authentication & database)
+* Vapi (voice AI)
+* Google Gemini (AI processing)
+
+---
+
+### 4. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open your browser and go to:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Live Demo
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[Prepwise](https://ai-agent-interview-app.vercel.app)
