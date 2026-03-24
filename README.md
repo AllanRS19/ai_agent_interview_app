@@ -1,12 +1,6 @@
 # Prepwise - AI Mock Interview Platform
 
-An AI-powered job interview preparation platform that simulates real interviews using voice agents and provides structured feedback to help users improve for any interviews the have scheduled.
-
----
-
-## Preview
-
-![Project Banner](https://github.com/user-attachments/assets/1c0131c7-9f2d-4e3b-b47c-9679e76d8f9a)
+This is an AI-powered job interview preparation platform that helps the users simulate real interviews using voice agents configured using Vapi and provides structured feedback to help users improve for any interviews they have scheduled.
 
 ---
 
