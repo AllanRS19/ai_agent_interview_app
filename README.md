@@ -88,7 +88,9 @@ Prepwise is a full-stack web application that allows users to:
 ```bash
 git clone https://github.com/YOUR_USERNAME/ai_agent_interview_app.git
 cd ai_agent_interview_app
+```
 
+---
 
 ### 2. Install dependencies
 
